@@ -1,0 +1,49 @@
+# 1. Text Post
+curl -X POST "http://localhost:8000/post/" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "post_type=text" \
+  -F "caption=This is a text post" \
+  -F "is_anonymous=false" \
+  -F "hash_tags=[\"text\", \"post\"]" \
+  -F "language=[\"en\"]"
+
+# 2. Image Post
+curl -X POST "http://localhost:8000/post/" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "post_type=image" \
+  -F "file=@/path/to/your/image.jpg" \
+  -F "caption=This is an image post" \
+  -F "is_anonymous=false" \
+  -F "hash_tags=[\"image\", \"photo\"]" \
+  -F "language=[\"en\"]"
+
+# 3. Video Post (with thumbnail)
+curl -X POST "http://localhost:8000/post/" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "post_type=video" \
+  -F "file=@/path/to/your/video.mp4" \
+  -F "thumbnail=@/path/to/your/thumbnail.jpg" \
+  -F "caption=This is a video post" \
+  -F "is_anonymous=false" \
+  -F "hash_tags=[\"video\", \"awesome\"]" \
+  -F "language=[\"en\"]"
+
+# 4. Anonymous Video Post
+curl -X POST "http://localhost:8000/post/" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "post_type=video" \
+  -F "file=@/path/to/your/video.mp4" \
+  -F "caption=This is an anonymous video post" \
+  -F "is_anonymous=true" \
+  -F "hash_tags=[\"anonymous\", \"video\"]" \
+  -F "language=[\"en\", \"es\"]"
+
+# 5. Image Post with Multiple Languages
+curl -X POST "http://localhost:8000/post/" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "post_type=image" \
+  -F "file=@/path/to/your/image.jpg" \
+  -F "caption=Multilingual post" \
+  -F "is_anonymous=false" \
+  -F "hash_tags=[\"multilingual\", \"global\"]" \
+  -F "language=[\"en\", \"es\", \"fr\"]"
