@@ -345,3 +345,36 @@ async def get_userDetails(
             status_code=400,
             detail=f"Error fetching user data: {str(e)}"
         )
+
+@router.post("/update/accountType", response_model=ApiSchema.ApiResponse)
+async def update_account_type(
+    user_id: str = Depends(verify_jwt_token),
+    db: Session = Depends(get_db)
+):
+    """
+    Toggle the account type between public and private
+    """
+    try:
+        # Get the existing user
+        user = db.query(models.User).filter(models.User.candidate_id == user_id).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Toggle the is_active status (Python uses 'not' instead of '!')
+        user.is_active = not user.is_active
+        
+        # Commit the changes
+        db.commit()
+        
+        current_status = "private" if user.is_active else "public"
+        
+        return {
+            "status": "success",
+            "message": f"Account type updated to {current_status} successfully",
+            "status_code": "201"
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Error while updating account type: {str(e)}"
+        )

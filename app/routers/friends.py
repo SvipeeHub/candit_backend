@@ -263,8 +263,12 @@ async def update_user_profile_image(
     user_id: str = Depends(verify_jwt_token),
     db: Session = Depends(get_db)
 ):
+    '''
+      To Block and unblock a specific user , if user is already block 
+      it will unblock the user other wise Block the user.
+    '''
     try:
-       
+      
         # Get the existing user and update their profile image
         user = db.query(models.Friendship).filter(
             models.Friendship.friend_id == friendship_id,
@@ -274,7 +278,7 @@ async def update_user_profile_image(
             raise HTTPException(status_code=404, detail="User not found")
             
         # Update only the profile image URL
-        user.isBolcked = True
+        user.isBolcked = not user.isBolcked
         
         # Commit the changes
         db.commit()
@@ -290,6 +294,7 @@ async def update_user_profile_image(
             detail=f"Error while blocking user with id {user.friend_id}: {str(e)}"
         )
     
+
 
 @router.post("/addHomies", response_model=ApiSchema.ApiResponse)
 async def update_homies_status(
