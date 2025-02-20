@@ -4,10 +4,12 @@ import ngrok
 from os import getenv
 from . import models
 from .database import engine,Base
-from .routers import users,auths,schools,post,memories,friends,danks
-from app.models import Otp_model,Post_model,School_model,User_model,Friendship_model,Post_restriction_model,Danks_model
+from .routers import users,auths,schools,post,memories,friends,danks,chating
+from app.models import Otp_model,Post_model,School_model,User_model,Friendship_model,Post_restriction_model,Danks_model,Chat_model,Message_model
 from fastapi.staticfiles import StaticFiles
 from app.middleware.postVisiblity_middleware import StaticFilesDomainMiddleware
+from app.routers import chating
+
 Base.metadata.create_all(bind=engine)
 NGROK_AUTH_TOKEN = getenv("NGROK_AUTHTOKEN", "")
 NGROK_EDGE = getenv("NGROK_EDGE", "edge:edghts_")
@@ -27,7 +29,7 @@ async def lifespan(app: FastAPI):
     ngrok.disconnect()
 
 app = FastAPI()
-
+manager = chating.ConnectionManager()
 app.include_router(users.router)
 app.include_router(auths.router)
 app.include_router(schools.router)
@@ -35,6 +37,8 @@ app.include_router(post.router)
 app.include_router(memories.router)
 app.include_router(friends.router)
 app.include_router(danks.router)
+app.include_router(chating.router)
+
 
 # app.include_router(comments.router)
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
