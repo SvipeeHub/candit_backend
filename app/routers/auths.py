@@ -55,9 +55,9 @@ async def generate_otp_route(request: schemas.PhoneInput, db: Session = Depends(
     # Delete existing OTPs for this email
     db.query(models.OTP).filter(models.OTP.phone == request.phone).delete()
 
-    # success = await send_otp(request.phone, otp_code)
-    # if not success:
-    #     raise HTTPException(status_code=500, detail="Failed to send OTP")
+    success = await send_otp(request.phone, otp_code)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to send OTP")
 
 
     # Create new OTP
