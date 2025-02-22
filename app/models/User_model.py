@@ -30,6 +30,8 @@ class User(Base):
     sent_chats = relationship("Chat", foreign_keys="Chat.sender_id", back_populates="sender")
     received_chats = relationship("Chat", foreign_keys="Chat.receiver_id", back_populates="receiver")
     messages = relationship("Message", back_populates="sender")
+    contacts = relationship("Contact", back_populates="owner")
+
     # comments = relationship("Comment", back_populates="user")
 
 @event.listens_for(User, 'before_insert')
