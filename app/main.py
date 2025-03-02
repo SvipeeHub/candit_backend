@@ -5,7 +5,7 @@ from os import getenv
 from . import models
 from .database import engine,Base
 from .routers import users,auths,schools,post,memories,friends,danks,chating
-from app.models import Otp_model,Post_model,School_model,User_model,Friendship_model,Post_restriction_model,Danks_model,Chat_model,Message_model
+from app.models import Otp_model,Post_model,School_model,User_model,Friendship_model,Post_restriction_model,Danks_model,Chat_model,Message_model,Contact_list
 from fastapi.staticfiles import StaticFiles
 from app.middleware.postVisiblity_middleware import StaticFilesDomainMiddleware
 from app.routers import chating
