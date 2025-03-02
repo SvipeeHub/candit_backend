@@ -27,6 +27,9 @@ class User(Base):
     posts = relationship("Post", back_populates="user")
     friendships = relationship("Friendship",foreign_keys=[Friendship.user_id]  ,back_populates="user")
     friend_of = relationship("Friendship",foreign_keys=[Friendship.friend_id] ,back_populates="friend")
+    sent_chats = relationship("Chat", foreign_keys="Chat.sender_id", back_populates="sender")
+    received_chats = relationship("Chat", foreign_keys="Chat.receiver_id", back_populates="receiver")
+    messages = relationship("Message", back_populates="sender")
     # comments = relationship("Comment", back_populates="user")
 
 @event.listens_for(User, 'before_insert')

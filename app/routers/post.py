@@ -154,7 +154,7 @@ async def get_posts(
 
             post_data = {
                 "post": {
-                    "id": post.id,
+                    "id": post.post_id,
                     "post_type": post.post_type,
                     "post_url": post.post_url,
                     "caption": post.caption,
